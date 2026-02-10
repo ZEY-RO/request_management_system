@@ -3,7 +3,11 @@ class Users::SessionsController < Devise::SessionsController
 
   def create
     super do |resource|
-      render json: { user: { id: resource.id, email: resource.email } }, status: :ok and return if resource.persisted?
+      if resource.persisted?
+        token = resource.ensure_auth_token!
+        response.headers['Authorization'] = "Bearer #{token}"
+        render json: { user: { id: resource.id, email: resource.email, auth_token: token } }, status: :ok and return
+      end
     end
   end
 end
