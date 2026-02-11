@@ -68,20 +68,22 @@ Model: `Request`
 - `title` (string, required)
 - `description` (text, required)
 - `status` (integer enum: `pending`, `approved`, `rejected`) — default `pending`
+- `priority` (integer enum: `low`, `medium`, `high`, **required**)
 - `created_at` / `updated_at`
 
 Planned API endpoints
 - POST /requests
-	- Payload: `{ "request": { "title": "...", "description": "...", "status": "pending" } }`
-	- Response: `201` `{ "request": { id, title, description, status, created_at, updated_at } }`
+	- Payload: `{ "request": { "title": "...", "description": "...", "status": "pending", "priority": "medium" } }`
+	- `priority` is **required**. Allowed values: `low`, `medium`, `high`.
+	- Response: `201` `{ "request": { id, title, description, status, priority, created_at, updated_at, user: { email: "..." } } }`
 - GET /requests
 	- Query params: `status`, `page`, `per_page`
-	- Response: `200` `{ "requests": [ { id, title, status, created_at } ] }`
+	- Response: `200` `{ "requests": [ { id, title, status, priority, created_at, updated_at, user: { email: "..." } } ], total_count: ... }`
 - GET /requests/:id
-	- Response: `200` `{ "request": { ... } }` or `404` if not found
+	- Response: `200` `{ "request": { id, title, description, status, priority, created_at, updated_at, user: { email: "..." } } }` or `404` if not found
 - PATCH /requests/:id
-	- Payload: partial `request` object (e.g., `{ "request": { "status": "approved" } }`)
-	- Response: `200` updated object or `422` validation errors
+	- Payload: partial `request` object (e.g., `{ "request": { "status": "approved" } }` or `{ "request": { "priority": "high" } }`)
+	- Response: `200` updated object with user email or `422` validation errors
 - DELETE /requests/:id
 	- Response: `204` no content
 
