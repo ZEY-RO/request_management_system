@@ -10,6 +10,8 @@ class AuthController < ApplicationController
       user.save!
     end
 
-    render json: { user: { id: user.id, email: user.email } }, status: :ok
+    token = user.ensure_auth_token!
+    response.headers['Authorization'] = "Bearer #{token}"
+    render json: { user: { id: user.id, email: user.email, auth_token: token } }, status: :ok
   end
 end

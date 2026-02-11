@@ -6,12 +6,14 @@ class RequestsController < ApplicationController
   def index
     scope = Request.all.order(created_at: :desc)
     scope = scope.where(status: Request.statuses[params[:status]]) if params[:status].present?
-    scope = scope.where('title ILIKE ?', "%#{params[:title]}%") if params[:title].present?
+
+    scope = scope.where('lower(title) LIKE ?', "%#{params[:title].downcase}%") if params[:title].present?
     page = params.fetch(:page, 1).to_i
     per_page = [params.fetch(:per_page, 25).to_i, 100].min
+    requests_count = scope.size
     requests = scope.offset((page - 1) * per_page).limit(per_page)
 
-    render json: { requests: requests.as_json(only: [:id, :title, :status, :created_at, :updated_at]) }
+    render json: { requests: requests.as_json(only: [:id, :title, :status, :created_at, :updated_at]), total_count: requests_count }
   end
 
   def show
