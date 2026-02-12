@@ -86,7 +86,7 @@ Model: `Request`
 - `title` (string, required)
 - `description` (text, required)
 - `status` (integer enum: `pending`, `approved`, `rejected`) — default `pending`
-- `priority` (integer enum: `low`, `medium`, `high`, **required**)
+- `priority` (integer enum: `low`, `medium`, `high`, **required**) - default `low`
 - `created_at` / `updated_at`
 
 Planned API endpoints
