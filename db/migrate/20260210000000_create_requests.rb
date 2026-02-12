@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateRequests < ActiveRecord::Migration[7.1]
   def change
     create_table :requests do |t|
@@ -8,6 +10,6 @@ class CreateRequests < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
-    add_index :requests, [:user_id, :created_at]
+    add_index :requests, %i[user_id created_at]
   end
 end

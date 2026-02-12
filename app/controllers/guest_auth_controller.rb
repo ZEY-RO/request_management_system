@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GuestAuthController < ApplicationController
   def login
     guest_email = 'guest@example.com'

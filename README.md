@@ -60,7 +60,25 @@ The API will be available at:
 http://localhost:3000
 ```
 
-## Request Management Understanding and Planning
+# Assumptions
+
+- Anyone can sign up and create requests.
+- Users can only update or delete their own requests.
+- Requests can be filtered by status and title when listing.
+- Anyone can view requests, but only authenticated users can create, update, or delete them.
+- Requests have a default status of `pending` and a default priority of `low` if not specified.
+- Requests are sorted by `created_at` in descending order when listed.
+
+# Limitations
+
+- No role-based access control; all users have the same permissions.
+- No rate limiting or throttling implemented.
+- No email notifications or background jobs.
+- No advanced search capabilities beyond basic filtering.
+
+
+
+# Request Management Understanding and Planning
 
 This app exposes a small Request management REST API for creating, listing, and updating requests.
 

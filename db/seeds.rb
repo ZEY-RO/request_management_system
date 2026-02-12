@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Seed fake user and requests for development/testing
 
 # Create or find user
@@ -35,5 +37,4 @@ Request.find_or_create_by!(id: 4) do |r|
   r.status = :rejected
 end
 
-puts "✓ Seeded 1 user and 4 requests"
-
+puts '✓ Seeded 1 user and 4 requests'
