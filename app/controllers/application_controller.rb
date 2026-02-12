@@ -1,13 +1,16 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user_from_token
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :password_confirmation])
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[email password password_confirmation])
+    devise_parameter_sanitizer.permit(:sign_in, keys: %i[email password])
   end
 
   private
@@ -20,7 +23,7 @@ class ApplicationController < ActionController::API
     header = request.headers['Authorization'].to_s
     return if header.blank?
 
-    token = header.split(' ').last
+    token = header.split.last
     return if token.blank?
 
     user = User.find_by(auth_token: token)

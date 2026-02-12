@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RequestsController < ApplicationController
   before_action :authenticate_user!, only: %i[create update destroy]
   before_action :set_request, only: %i[show update destroy]
@@ -14,11 +16,16 @@ class RequestsController < ApplicationController
     requests_count = scope.size
     requests = scope.offset((page - 1) * per_page).limit(per_page)
 
-    render json: { requests: requests.as_json(only: [:id, :title, :status, :priority, :user_id, :created_at, :updated_at], include: { user: { only: :email } }), total_count: requests_count }
+    render json: {
+      requests: requests.as_json(only: %i[id title status priority user_id created_at updated_at],
+                                 include: { user: { only: :email } }), total_count: requests_count
+    }
   end
 
   def show
-    render json: { request: @request.as_json(only: [:id, :title, :description, :status, :priority, :user_id, :created_at, :updated_at], include: { user: { only: :email } }) }
+    render json: { request: @request.as_json(
+      only: %i[id title description status priority user_id created_at updated_at], include: { user: { only: :email } }
+    ) }
   end
 
   def create
@@ -32,7 +39,10 @@ class RequestsController < ApplicationController
 
   def update
     if @request.update(request_params)
-      render json: { request: @request.as_json(only: [:id, :title, :description, :status, :priority, :user_id, :created_at, :updated_at], include: { user: { only: :email } }) }
+      render json: { request: @request.as_json(
+        only: %i[id title description status priority user_id created_at
+                 updated_at], include: { user: { only: :email } }
+      ) }
     else
       render json: { errors: @request.errors.full_messages }, status: :unprocessable_entity
     end

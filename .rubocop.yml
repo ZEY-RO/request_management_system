@@ -1,0 +1,33 @@
+AllCops:
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - bin/bundle
+    - config/initializers/devise.rb
+
+Metrics/AbcSize:
+  Max: 45
+
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - bin/bundle
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+  Exclude:
+    - bin/bundle
+
+Metrics/PerceivedComplexity:
+  Max: 10
+  Exclude:
+    - bin/bundle
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
