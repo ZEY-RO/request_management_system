@@ -1,5 +1,5 @@
-class AuthController < ApplicationController
-  def guest
+class GuestAuthController < ApplicationController
+  def login
     guest_email = 'guest@example.com'
     user = User.find_or_initialize_by(email: guest_email)
 
